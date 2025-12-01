@@ -243,8 +243,7 @@ void ClonaPalabras(char* pal,
     aMinusculas(w);
     int len = strlen(w);
 
-    // Alfabeto extendido con caracteres especiales ASCII extendido
-    const char* alfabeto = "abcdefghijklmnopqrstuvwxyz\xDF\xDA\xDD\xB1\xBE\xB7";
+    const char* alfabeto = "abcdefghijklmnopqrstuvwxyz\xF1\xE1\xE9\xED\xF3\xFA"; // ραινσϊ
     const int A = 32; // 26 + 6 caracteres especiales
 
     // Agregar sin eliminar duplicados
