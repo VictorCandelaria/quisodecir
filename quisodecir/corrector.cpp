@@ -266,7 +266,10 @@ void ClonaPalabras(char* pal,
             if (j != i)
                 t[p++] = w[j];
         t[p] = '\0';
-        agregar(t);
+        if (p > 0)
+        {
+            agregar(t);
+        }
     }
 
     /* --- 2. Transposición --- */
