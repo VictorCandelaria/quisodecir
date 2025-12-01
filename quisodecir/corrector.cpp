@@ -80,3 +80,80 @@ static void insertarOrdenado(char dic[][TAMTOKEN], int est[], int& n, int pos, c
     est[pos] = 1;
     n++;
 }
+
+
+/* ============================================================
+   DICCIONARIO
+   ============================================================ */
+void Diccionario(char* archivo,
+    char palabras[][TAMTOKEN],
+    int est[],
+    int& n)
+{
+    n = 0;
+    if (!archivo) return;
+
+    FILE* f = fopen(archivo, "rb");
+    if (!f) return;
+
+    char tok[TAMTOKEN];
+    int idx = 0;
+    int c;
+
+    while ((c = fgetc(f)) != EOF)
+    {
+        char ch = (char)c;
+
+        if (esSeparador(ch))
+        {
+            if (idx > 0)
+            {
+                tok[idx] = '\0';
+                idx = 0;
+
+                limpiarYValidar(tok);
+                if (tok[0] == '\0') continue;
+
+                aMinusculas(tok);
+
+                int pos = buscarBinaria(palabras, n, tok);
+                if (pos >= 0)
+                    est[pos]++;
+                else
+                {
+                    pos = -pos - 1;
+                    insertarOrdenado(palabras, est, n, pos, tok);
+                }
+            }
+        }
+        else
+        {
+            if (idx < TAMTOKEN - 1)
+                tok[idx++] = ch;
+            else
+            {
+                while ((c = fgetc(f)) != EOF && !esSeparador((char)c));
+                idx = 0;
+            }
+        }
+    }
+
+    if (idx > 0)
+    {
+        tok[idx] = '\0';
+        limpiarYValidar(tok);
+        if (tok[0])
+        {
+            aMinusculas(tok);
+            int pos = buscarBinaria(palabras, n, tok);
+            if (pos >= 0) est[pos]++;
+            else
+            {
+                pos = -pos - 1;
+                insertarOrdenado(palabras, est, n, pos, tok);
+            }
+        }
+    }
+
+    fclose(f);
+}
