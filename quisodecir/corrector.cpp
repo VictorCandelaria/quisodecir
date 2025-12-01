@@ -34,7 +34,11 @@ static int esSeparador(char c)
     return (c == ' ' || c == '\t' ||
         c == '\n' || c == '\r' ||
         c == ',' || c == ';' ||
-        c == '(' || c == ')');
+        c == '(' || c == ')' ||
+        c == '\'' || c == '\"' || // Comillas simples/dobles
+        c == '!' || c == '?' || c == '.' || // Puntuación
+        c == '&' || c == '$' || c == '#' || c == '[' || c == ']' // Símbolos extra
+        );
 }
 
 
