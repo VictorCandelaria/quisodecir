@@ -221,3 +221,46 @@ void ListaCandidatas(char clonadas[][TAMTOKEN],
         }
     }
 }
+
+
+/* ============================================================
+   CLONAR PALABRAS
+   ============================================================ */
+void ClonaPalabras(char* pal,
+    char lista[][TAMTOKEN],
+    int& n)
+{
+    n = 0;
+
+    char w[TAMTOKEN];
+    strncpy(w, pal, TAMTOKEN - 1);
+    w[TAMTOKEN - 1] = '\0';
+
+    aMinusculas(w);
+    int len = strlen(w);
+
+    // Alfabeto extendido con caracteres especiales ASCII extendido
+    const char* alfabeto = "abcdefghijklmnopqrstuvwxyz\xDF\xDA\xDD\xB1\xBE\xB7";
+    const int A = 32; // 26 + 6 caracteres especiales
+
+    // Agregar sin eliminar duplicados
+    auto agregar = [&](const char* s)
+        {
+            strcpy(lista[n++], s);
+        };
+
+    agregar(w);
+
+    /* --- 1. Eliminación --- */
+    for (int i = 0; i < len; i++)
+    {
+        char t[TAMTOKEN];
+        int p = 0;
+        for (int j = 0; j < len; j++)
+            if (j != i)
+                t[p++] = w[j];
+        t[p] = '\0';
+        agregar(t);
+    }
+
+   
