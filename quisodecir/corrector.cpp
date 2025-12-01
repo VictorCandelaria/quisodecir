@@ -157,3 +157,67 @@ void Diccionario(char* archivo,
 
     fclose(f);
 }
+
+
+/* ============================================================
+   LISTA CANDIDATAS
+   ============================================================ */
+void ListaCandidatas(char clonadas[][TAMTOKEN],
+    int numClonadas,
+    char dic[][TAMTOKEN],
+    int est[],
+    int numDic,
+    char finales[][TAMTOKEN],
+    int peso[],
+    int& numFinal)
+{
+    numFinal = 0;
+
+    for (int i = 0; i < numClonadas; i++)
+    {
+        char tmp[TAMTOKEN];
+        strcpy(tmp, clonadas[i]);
+        aMinusculas(tmp);
+
+        int pos = buscarBinaria(dic, numDic, tmp);
+
+        if (pos >= 0)
+        {
+            int ya = 0;
+            for (int j = 0; j < numFinal; j++)
+                if (strcmp(finales[j], dic[pos]) == 0)
+                    ya = 1;
+
+            if (!ya)
+            {
+                strcpy(finales[numFinal], dic[pos]);
+                peso[numFinal] = est[pos];
+                numFinal++;
+            }
+        }
+    }
+
+    for (int i = 0; i < numFinal - 1; i++)
+    {
+        int best = i;
+        for (int j = i + 1; j < numFinal; j++)
+        {
+            if (peso[j] > peso[best]) best = j;
+            else if (peso[j] == peso[best] &&
+                strcmp(finales[j], finales[best]) < 0)
+                best = j;
+        }
+
+        if (best != i)
+        {
+            char tmp[TAMTOKEN];
+            strcpy(tmp, finales[i]);
+            strcpy(finales[i], finales[best]);
+            strcpy(finales[best], tmp);
+
+            int t = peso[i];
+            peso[i] = peso[best];
+            peso[best] = t;
+        }
+    }
+}
