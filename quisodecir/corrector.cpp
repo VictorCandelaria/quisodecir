@@ -44,7 +44,10 @@ static int esSeparador(char c)
 
 static int esAlfabetico(char c)
 {
-    return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+    return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
+        || (c == '\'') || (c == '&') || (c == '$') || (c == '!') || (c == '#')
+        || (c == 'á') || (c == 'é') || (c == 'í') || (c == 'ó') || (c == 'ú') || (c == 'ñ')
+        );
 }
 
 
