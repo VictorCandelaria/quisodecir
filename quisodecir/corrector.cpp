@@ -263,4 +263,58 @@ void ClonaPalabras(char* pal,
         agregar(t);
     }
 
-   
+    /* --- 2. Transposición --- */
+    for (int i = 0; i < len - 1; i++)
+    {
+        char t[TAMTOKEN];
+        strcpy(t, w);
+        char tmp = t[i];
+        t[i] = t[i + 1];
+        t[i + 1] = tmp;
+        agregar(t);
+    }
+
+    /* --- 3. Sustitución --- */
+    for (int i = 0; i < len; i++)
+        for (int a = 0; a < A; a++)
+        {
+            char t[TAMTOKEN];
+            strcpy(t, w);
+            t[i] = alfabeto[a];
+            agregar(t);
+        }
+
+    /* --- 4. Inserción --- */
+    for (int pos = 0; pos <= len; pos++)
+        for (int a = 0; a < A; a++)
+        {
+            char t[TAMTOKEN];
+            int p = 0;
+
+            for (int i = 0; i < pos; i++)
+                t[p++] = w[i];
+
+            t[p++] = alfabeto[a];
+
+            for (int i = pos; i < len; i++)
+                t[p++] = w[i];
+
+            t[p] = '\0';
+            agregar(t);
+        }
+
+    /* Ordenar por ASCII */
+    for (int i = 1; i < n; i++)
+    {
+        char key[TAMTOKEN];
+        strcpy(key, lista[i]);
+
+        int j = i - 1;
+        while (j >= 0 && strcmp(lista[j], key) > 0)
+        {
+            strcpy(lista[j + 1], lista[j]);
+            j--;
+        }
+        strcpy(lista[j + 1], key);
+    }
+}
